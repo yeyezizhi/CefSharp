@@ -15,6 +15,7 @@ using CefSharp.Example.ModelBinding;
 using CefSharp.Example.PostMessage;
 using CefSharp.Wpf.Example.Handlers;
 using CefSharp.Wpf.Example.ViewModels;
+using CefSharp.Wpf.Experimental;
 
 namespace CefSharp.Wpf.Example.Views
 {
@@ -22,6 +23,7 @@ namespace CefSharp.Wpf.Example.Views
     {
         //Store draggable region if we have one - used for hit testing
         private Region region;
+        private WpfImeKeyboardHandler imeKeyHandler;
 
         public BrowserTabView()
         {
@@ -145,6 +147,9 @@ namespace CefSharp.Wpf.Example.Views
             CefExample.RegisterTestResources(browser);
 
             browser.JavascriptMessageReceived += OnBrowserJavascriptMessageReceived;
+
+            imeKeyHandler = new WpfImeKeyboardHandler(browser);
+            browser.WpfKeyboardHandler = imeKeyHandler;
         }
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
